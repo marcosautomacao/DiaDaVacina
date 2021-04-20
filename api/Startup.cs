@@ -28,7 +28,7 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DiaDaVacinaContext>(options =>
+            services.AddEntityFrameworkNpgsql().AddDbContext<DiaDaVacinaContext>(options =>
         options.UseNpgsql(Configuration.GetConnectionString("DiaDaVacinaDB")));
         }
 

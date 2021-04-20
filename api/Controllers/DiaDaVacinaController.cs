@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,38 +19,20 @@ namespace api.Controllers
         private readonly ILogger<DiaDaVacinaController> _logger;
         private readonly DiaDaVacinaContext _contextDb;
 
-        public DiaDaVacinaController(ILogger<DiaDaVacinaController> logger)
+        public DiaDaVacinaController(ILogger<DiaDaVacinaController> logger, DiaDaVacinaContext contextDb)
         {
             _logger = logger;
+            _contextDb = contextDb;
         }
 
         [HttpGet]
         public ActionResult GetAsync([FromQuery] Pessoa pessoa)
         {
-
             _contextDb.Add(pessoa);
-            var result = _contextDb.Find<Pessoa>();
-            return Ok("Hello World");
+            DbSet<Pessoa> result = _contextDb.Pessoa;
+            result.Add(pessoa);
+            _contextDb.SaveChanges();
+            return Ok();
         }
     }
-
-    [Table("Pessoa")]
-    public class Pessoa
-    {
-        [Key]
-        public string Telefone;
-        public string Estado;
-        public DateTime DataNascimento;
-    }
-
-    public class DiaDaVacinaContext : DbContext
-    {
-        public DbSet<Pessoa> Pessoa { get; set; }
-
-        public DiaDaVacinaContext(DbContextOptions<DiaDaVacinaContext> options) :
-            base(options)
-        {
-        }
-    }
-
 }
