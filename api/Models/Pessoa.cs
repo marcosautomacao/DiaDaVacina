@@ -13,6 +13,6 @@ namespace api.Models
         [Key]
         public string Telefone { get; set; }
         public string Estado { get; set; }
-        public DateTime DataNascimento;
+        public DateTime DataNascimento { get; set; }
     }
 }
