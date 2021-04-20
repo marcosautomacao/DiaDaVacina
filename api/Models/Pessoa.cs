@@ -4,15 +4,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Models
 {
     [Table("Pessoa")]
+    [Index(nameof(DataNascimento))]
     public class Pessoa
     {
         [Key]
-        public string Telefone { get; set; }
+        public Int64 Telefone { get; set; }
         public string Estado { get; set; }
+
+        [Column(TypeName = "Date")]
         public DateTime DataNascimento { get; set; }
     }
 }

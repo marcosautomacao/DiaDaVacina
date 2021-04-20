@@ -10,8 +10,8 @@ using api;
 namespace api.Migrations
 {
     [DbContext(typeof(DiaDaVacinaContext))]
-    [Migration("20210420032524_comit1")]
-    partial class comit1
+    [Migration("20210420034747_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,16 +23,20 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Pessoa", b =>
                 {
-                    b.Property<string>("Telefone")
-                        .HasColumnType("text");
+                    b.Property<long>("Telefone")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("Date");
 
                     b.Property<string>("Estado")
                         .HasColumnType("text");
 
                     b.HasKey("Telefone");
+
+                    b.HasIndex("DataNascimento");
 
                     b.ToTable("Pessoa");
                 });

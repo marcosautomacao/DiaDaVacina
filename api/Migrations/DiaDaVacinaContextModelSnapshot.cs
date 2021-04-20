@@ -21,16 +21,20 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Pessoa", b =>
                 {
-                    b.Property<string>("Telefone")
-                        .HasColumnType("text");
+                    b.Property<long>("Telefone")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("Date");
 
                     b.Property<string>("Estado")
                         .HasColumnType("text");
 
                     b.HasKey("Telefone");
+
+                    b.HasIndex("DataNascimento");
 
                     b.ToTable("Pessoa");
                 });
