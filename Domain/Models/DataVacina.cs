@@ -6,17 +6,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Models
+namespace Domain.Models
 {
-    [Table("Pessoa")]
-    [Index(nameof(DataNascimento))]
-    public class Pessoa
+    [Table("DataVacina")]
+    public class DataVacina
     {
         [Key]
-        public Int64 Telefone { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int id { get; set; }
+        public int idade { get; set; }
         public string Estado { get; set; }
-
-        [Column(TypeName = "Date")]
-        public DateTime DataNascimento { get; set; }
+        public DateTime DataInicio { get; set; }
     }
 }

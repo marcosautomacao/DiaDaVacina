@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Controllers;
+using Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,7 +30,7 @@ namespace api
         {
             services.AddControllers();
             services.AddEntityFrameworkNpgsql().AddDbContext<DiaDaVacinaContext>(options =>
-        options.UseNpgsql(Configuration.GetConnectionString("DiaDaVacinaDB")));
+        options.UseNpgsql(Configuration.GetConnectionString("DiaDaVacinaDB"), b => b.MigrationsAssembly("Domain")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
