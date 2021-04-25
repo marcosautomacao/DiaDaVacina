@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Comtele.Sdk.Services;
 using Domain;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
@@ -54,25 +55,48 @@ namespace api
                         {
                             foreach (var v in dataVacina)
                             {
+                                var telefoneList = new List<string>();
                                 //Vacinados de hoje
                                 var NascimentoMinimo = v.DataInicio.AddDays(-v.idade);
-                                var pessoasParaNotificarHoje = pessoas.Select(p => p.DataNascimento.Date == NascimentoMinimo.Date && p.Estado == v.Estado && p.Sexo == v.Sexo);
+                                IEnumerable<Pessoa> pessoasParaNotificarHoje = pessoas.Where(p => p.DataNascimento.Date == NascimentoMinimo.Date && p.Estado == v.Estado && p.Sexo == v.Sexo);
                                 foreach (var p in pessoasParaNotificarHoje)
                                 {
-                                    Console.WriteLine("Hoje é dia de vacinar");
+                                    telefoneList.Add(p.Telefone.ToString());                                    
                                 }
+                                sendSms("Hoje é dia de vacinar", telefoneList.ToArray());
 
+                                telefoneList = new List<string>();
                                 //Vacinados de Amanha
                                 NascimentoMinimo = v.DataInicio.AddDays(-1);
-                                var pessoasParaNotificarAmanha = pessoas.Select(p => p.DataNascimento.Date == NascimentoMinimo.Date && p.Estado == v.Estado && p.Sexo == v.Sexo);
-                                foreach (var p in pessoasParaNotificarHoje)
+                                var pessoasParaNotificarAmanha = pessoas.Where(p => p.DataNascimento.Date == NascimentoMinimo.Date && p.Estado == v.Estado && p.Sexo == v.Sexo);
+                                foreach (var p in pessoasParaNotificarAmanha)
                                 {
-                                    Console.WriteLine("Amanha é dia de vacinar");
+                                    telefoneList.Add(p.Telefone.ToString());
                                 }
+                                sendSms("Amanha é dia de vacinar", telefoneList.ToArray());
                             }
                         }
                     }
                 }
+            }
+        }
+
+        private void sendSms(string mensagem, string[] telefones )
+        {
+            var textMessageService = new TextMessageService(_configuration.GetSection("ApiKeySms").Value);
+            var result = textMessageService.Send(
+             "appVacinas",             // Sender: Id de requisicao da sua aplicacao para ser retornado no relatorio, pode ser passado em branco.
+             mensagem,                 // Content: Conteudo da mensagem a ser enviada.
+             telefones                 // Receivers: Numero de telefone que vai ser enviado o SMS.
+            );
+
+            if (result.Success)
+            {
+                _logger.LogInformation("A mensagem foi enviada com sucesso.");
+            }
+            else
+            {
+                _logger.LogInformation("A mensagem não pode ser enviada. Detalhes: " + result.Message);
             }
         }
     }
