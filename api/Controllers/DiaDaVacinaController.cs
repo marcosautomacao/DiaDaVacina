@@ -30,7 +30,7 @@ namespace api.Controllers
         [HttpGet]
         public ActionResult GetAsync([FromQuery] Pessoa pessoa)
         {
-                _logger.Log(LogLevel.Information, "GetAsync called {0} ", JsonConvert.SerializeObject(pessoa));
+            _logger.Log(LogLevel.Information, "GetAsync called {0} ", JsonConvert.SerializeObject(pessoa));
             List<Pessoa> result = new List<Pessoa>();
 
             if (pessoa.Telefone != 0) result.Add(_contextDb.Pessoa.Find(pessoa.Telefone));
@@ -41,10 +41,10 @@ namespace api.Controllers
         [HttpPost]
         public ActionResult PostAsync([FromQuery] Pessoa pessoa)
         {
-                _logger.Log(LogLevel.Information, "PostAsync called {0} ", JsonConvert.SerializeObject(pessoa));
-                _contextDb.Pessoa.Add(pessoa);
-                _contextDb.SaveChanges();
-                return Ok();
+            _logger.Log(LogLevel.Information, "PostAsync called {0} ", JsonConvert.SerializeObject(pessoa));
+            _contextDb.Pessoa.Add(pessoa);
+            _contextDb.SaveChanges();
+            return Ok();
         }
       
         [HttpPut]

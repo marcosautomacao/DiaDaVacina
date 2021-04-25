@@ -5,9 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api", "api\api.csproj", "{01ADD3C2-FDF0-4612-8B78-97F8F0115E2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{D41A8701-5151-4107-AB36-FB774A410A55}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService", "WorkerService\WorkerService.csproj", "{0B1E3359-8044-4693-8077-617CCE48BFEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{D41A8701-5151-4107-AB36-FB774A410A55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{D41A8701-5151-4107-AB36-FB774A410A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D41A8701-5151-4107-AB36-FB774A410A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D41A8701-5151-4107-AB36-FB774A410A55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B1E3359-8044-4693-8077-617CCE48BFEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B1E3359-8044-4693-8077-617CCE48BFEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B1E3359-8044-4693-8077-617CCE48BFEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B1E3359-8044-4693-8077-617CCE48BFEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

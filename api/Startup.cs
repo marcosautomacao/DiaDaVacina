@@ -30,7 +30,8 @@ namespace api
         {
             services.AddControllers();
             services.AddEntityFrameworkNpgsql().AddDbContext<DiaDaVacinaContext>(options =>
-        options.UseNpgsql(Configuration.GetConnectionString("DiaDaVacinaDB"), b => b.MigrationsAssembly("Domain")));
+                options.UseNpgsql(Configuration.GetConnectionString("DiaDaVacinaDB"), b => b.MigrationsAssembly("Domain")));
+            services.AddHostedService<Worker>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

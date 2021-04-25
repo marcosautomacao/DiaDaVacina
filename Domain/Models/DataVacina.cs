@@ -17,5 +17,6 @@ namespace Domain.Models
         public int idade { get; set; }
         public string Estado { get; set; }
         public DateTime DataInicio { get; set; }
+        public string Sexo { get; set; }
     }
 }

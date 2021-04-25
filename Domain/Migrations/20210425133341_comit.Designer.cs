@@ -3,15 +3,17 @@ using System;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Domain.Migrations
 {
     [DbContext(typeof(DiaDaVacinaContext))]
-    partial class DiaDaVacinaContextModelSnapshot : ModelSnapshot
+    [Migration("20210425133341_comit")]
+    partial class comit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace Domain.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Estado")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Sexo")
                         .HasColumnType("text");
 
                     b.Property<int>("idade")

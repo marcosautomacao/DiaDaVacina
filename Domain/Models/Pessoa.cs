@@ -18,5 +18,6 @@ namespace Domain.Models
 
         [Column(TypeName = "Date")]
         public DateTime DataNascimento { get; set; }
+        public string Sexo { get; set; }
     }
 }
