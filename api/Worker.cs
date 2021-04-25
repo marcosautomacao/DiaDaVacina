@@ -44,8 +44,6 @@ namespace api
                 if (today.Date == tomorrow.Date && today.Hour == tomorrow.Hour)
                 {
                     tomorrow.AddDays(1);
-                    var pessoas = new List<Pessoa>();
-
                     using (var scope = _scopeFactory.CreateScope())
                     {
                         var _contextDb = scope.ServiceProvider.GetRequiredService<DiaDaVacinaContext>();
@@ -57,23 +55,25 @@ namespace api
                             {
                                 var telefoneList = new List<string>();
                                 //Vacinados de hoje
-                                var NascimentoMinimo = v.DataInicio.AddDays(-v.idade);
-                                IEnumerable<Pessoa> pessoasParaNotificarHoje = pessoas.Where(p => p.DataNascimento.Date == NascimentoMinimo.Date && p.Estado == v.Estado && p.Sexo == v.Sexo);
+                                var NascimentoMinimo = v.DataInicio.AddYears(-v.idade);
+                                List<Pessoa> pessoasParaNotificarHoje = _contextDb.Pessoa.Where(p => p.DataNascimento.Date == NascimentoMinimo.Date && p.Estado == v.Estado && p.Sexo == v.Sexo).ToList();
                                 foreach (var p in pessoasParaNotificarHoje)
                                 {
                                     telefoneList.Add(p.Telefone.ToString());                                    
                                 }
-                                sendSms("Hoje é dia de vacinar", telefoneList.ToArray());
+                                if (telefoneList.Count > 0)
+                                    sendSms("Hoje é dia de vacinar", telefoneList.ToArray());
 
                                 telefoneList = new List<string>();
                                 //Vacinados de Amanha
                                 NascimentoMinimo = v.DataInicio.AddDays(-1);
-                                var pessoasParaNotificarAmanha = pessoas.Where(p => p.DataNascimento.Date == NascimentoMinimo.Date && p.Estado == v.Estado && p.Sexo == v.Sexo);
+                                var pessoasParaNotificarAmanha = _contextDb.Pessoa.ToList().Where(p => p.DataNascimento.Date == NascimentoMinimo.Date && p.Estado == v.Estado && p.Sexo == v.Sexo);
                                 foreach (var p in pessoasParaNotificarAmanha)
                                 {
                                     telefoneList.Add(p.Telefone.ToString());
                                 }
-                                sendSms("Amanha é dia de vacinar", telefoneList.ToArray());
+                                if (telefoneList.Count > 0)
+                                    sendSms("Amanha é dia de vacinar", telefoneList.ToArray());
                             }
                         }
                     }
